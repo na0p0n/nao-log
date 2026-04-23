@@ -3,7 +3,7 @@ title: "はじめての AI ブログ"
 description: "Claude Code をワークフローの中心に据えた、日本語技術ブログを立ち上げたので全体像を紹介します。"
 pubDate: 2026-04-23
 tags: ["meta", "claude", "astro"]
-draft: true
+draft: false
 ---
 
 ## このブログについて
