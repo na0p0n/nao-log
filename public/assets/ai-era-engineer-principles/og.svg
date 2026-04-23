@@ -1,0 +1,13 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0f1117"/>
+  <rect x="0" y="0" width="6" height="630" fill="#0969da"/>
+  <rect x="80" y="420" width="1040" height="1" fill="#2a2a3a"/>
+
+  <text x="80" y="180" font-family="Hiragino Sans, Noto Sans JP, sans-serif" font-size="56" fill="#ffffff" font-weight="bold">AI時代のエンジニアの役割変化</text>
+  <text x="80" y="260" font-family="Hiragino Sans, Noto Sans JP, sans-serif" font-size="32" fill="#8b9cb0">コーディングがコモディティ化した先で問われること</text>
+
+  <text x="80" y="380" font-family="Hiragino Sans, Noto Sans JP, sans-serif" font-size="22" fill="#4a6080">創造 · 判断 · 審美眼 · 責任</text>
+
+  <text x="80" y="580" font-family="Hiragino Sans, Noto Sans JP, sans-serif" font-size="26" fill="#0969da" font-weight="bold">Blog</text>
+  <text x="1120" y="580" font-family="Hiragino Sans, Noto Sans JP, sans-serif" font-size="22" fill="#4a6080" text-anchor="end">AI · エンジニアリング</text>
+</svg>
