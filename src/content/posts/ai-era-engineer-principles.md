@@ -52,6 +52,7 @@ flowchart LR
 ## AI 時代のエンジニアに求められる資質
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0969da', 'primaryTextColor': '#ffffff', 'primaryBorderColor': '#1e40af', 'lineColor': '#6b7280', 'secondaryColor': '#1d4ed8', 'tertiaryColor': '#3b82f6'}}}%%
 mindmap
   root((AI時代のエンジニア))
     問う力
@@ -119,9 +120,9 @@ flowchart LR
   A --> C["② 目的意識の喪失\n作ること自体が目的化"]
   A --> D["③ 品質・安全・倫理の空白\n脆弱性・バイアスを見落とす"]
   style A fill:#d73a4a,color:#fff
-  style B fill:#ffe8e8
-  style C fill:#ffe8e8
-  style D fill:#ffe8e8
+  style B fill:#fee2e2,color:#7f1d1d,stroke:#f87171
+  style C fill:#fee2e2,color:#7f1d1d,stroke:#f87171
+  style D fill:#fee2e2,color:#7f1d1d,stroke:#f87171
 ```
 
 AI 駆動開発が実用化されたことで、開発速度は飛躍的に上がっています。

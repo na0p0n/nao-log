@@ -74,7 +74,20 @@ const ogImage = resolveAsset(image ?? 'og-default.png');
           const { default: mermaid } = await import(
             'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'
           );
-          mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+          mermaid.initialize({
+            startOnLoad: false,
+            theme: 'base',
+            themeVariables: {
+              primaryColor: '#dbeafe',
+              primaryTextColor: '#1a1a1a',
+              primaryBorderColor: '#0969da',
+              lineColor: '#6b7280',
+              secondaryColor: '#eff6ff',
+              tertiaryColor: '#f0f9ff',
+              fontFamily: 'system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif',
+            },
+            securityLevel: 'loose',
+          });
           pres.forEach((pre) => {
             const div = document.createElement('div');
             div.className = 'mermaid';
