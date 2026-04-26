@@ -118,15 +118,16 @@ const ogImage = resolveAsset(image ?? 'og-default.png');
       :root {
         /* Color palette */
         --fg: #1a1a1a;
-        --bg: #fafafa;
-        --bg-alt: #f0f0f0;
-        --border: #e5e5e5;
-        --muted: #666;
-        --muted-light: #999;
+        --bg: #f0f4f8;
+        --card-bg: #ffffff;
+        --bg-alt: #1a1a2e;
+        --border: #d0d7de;
+        --muted: #656d76;
+        --muted-light: #9198a1;
         --accent: #0969da;
-        --accent-hover: #0860ca;
-        --tag-bg: #f0f9ff;
-        --tag-text: #0366d6;
+        --accent-hover: #0550ae;
+        --tag-bg: #0969da;
+        --tag-text: #ffffff;
 
         /* Spacing */
         --space-xs: 0.5rem;
@@ -165,7 +166,6 @@ const ogImage = resolveAsset(image ?? 'og-default.png');
       }
       .site-header {
         background: var(--bg-alt);
-        border-bottom: 1px solid var(--border);
       }
       .header-nav {
         display: flex;
@@ -178,10 +178,12 @@ const ogImage = resolveAsset(image ?? 'og-default.png');
       .site-title {
         font-size: var(--text-xl);
         text-decoration: none;
-        color: var(--fg);
+        color: #ffffff;
+        letter-spacing: -0.02em;
       }
       .site-title:hover {
-        color: var(--accent);
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
       }
       .nav-links {
         display: flex;
@@ -189,11 +191,11 @@ const ogImage = resolveAsset(image ?? 'og-default.png');
         font-size: var(--text-sm);
       }
       .nav-links a {
-        color: var(--muted);
+        color: rgba(255, 255, 255, 0.65);
         transition: color 0.2s;
       }
       .nav-links a:hover {
-        color: var(--accent);
+        color: #ffffff;
         text-decoration: none;
       }
       main {
