@@ -12,6 +12,32 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+// Get all posts for related posts calculation
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+
+// Calculate reading time (rough estimate based on character count)
+const estimateReadingTime = (title: string, description: string): number => {
+  // Count characters and estimate reading time (Japanese: ~200 chars/min, English: ~200 words/min)
+  const totalChars = (title + ' ' + description).length;
+  const readingTime = Math.max(1, Math.ceil(totalChars / 600)); // ~600 chars per minute
+  return readingTime;
+};
+
+const readingTime = estimateReadingTime(post.data.title, post.data.description);
+
+// Find related posts by tags (exclude current post)
+const relatedPosts = allPosts
+  .filter((p) => p.id !== post.id && p.data.tags && p.data.tags.length > 0)
+  .filter(
+    (p) =>
+      post.data.tags &&
+      post.data.tags.some((tag) => p.data.tags.includes(tag)),
+  )
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3); // Show top 3 related posts
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <BaseLayout
@@ -23,25 +49,124 @@ const { Content } = await render(post);
   tags={post.data.tags}
   type="article"
 >
-  <article>
-    <header>
+  <article class="article-container">
+    <header class="article-header">
       <h1>{post.data.title}</h1>
-      <time datetime={post.data.pubDate.toISOString()}>
-        {post.data.pubDate.toISOString().slice(0, 10)}
-      </time>
-      {post.data.updatedDate && (
-        <span style="color: var(--muted); margin-left: 1rem; font-size: 0.9em;">
-          (更新: {post.data.updatedDate.toISOString().slice(0, 10)})
-        </span>
-      )}
+      <div class="article-meta">
+        <time datetime={post.data.pubDate.toISOString()}>
+          {post.data.pubDate.toISOString().slice(0, 10)}
+        </time>
+        {post.data.updatedDate && (
+          <span class="updated">
+            (更新: {post.data.updatedDate.toISOString().slice(0, 10)})
+          </span>
+        )}
+        <span class="reading-time">{readingTime}分で読める</span>
+      </div>
       {post.data.tags.length > 0 && (
-        <p>
-          {post.data.tags.map((t) => (
-            <span style="margin-right: 0.5rem; color: var(--muted);">#{t}</span>
+        <div class="article-tags">
+          {post.data.tags.map((tag) => (
+            <span class="tag">{tag}</span>
           ))}
-        </p>
+        </div>
       )}
     </header>
-    <Content />
+    <div class="article-content">
+      <Content />
+    </div>
   </article>
+
+  {relatedPosts.length > 0 && (
+    <footer class="article-footer">
+      <h3>関連記事</h3>
+      <ul class="related-posts">
+        {relatedPosts.map((related) => (
+          <li>
+            <a href={`${base}posts/${related.id}/`}>{related.data.title}</a>
+          </li>
+        ))}
+      </ul>
+    </footer>
+  )}
+
+  <style>
+    .article-container {
+      max-width: 100%;
+    }
+    .article-header {
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--border);
+    }
+    .article-header h1 {
+      margin-top: 0;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      font-size: var(--text-sm);
+      color: var(--muted);
+      margin-bottom: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .article-meta time {
+      font-weight: 500;
+    }
+    .updated {
+      font-style: italic;
+    }
+    .reading-time {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      font-size: var(--text-xs);
+      font-weight: 500;
+    }
+    .article-tags {
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+    .tag {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      font-size: var(--text-xs);
+      font-weight: 500;
+    }
+    .article-content {
+      margin: var(--space-lg) 0;
+    }
+    .article-footer {
+      margin-top: var(--space-xl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--border);
+    }
+    .article-footer h3 {
+      margin-top: 0;
+      font-size: var(--text-lg);
+    }
+    .related-posts {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .related-posts a {
+      padding: var(--space-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.2s, background 0.2s;
+      display: block;
+    }
+    .related-posts a:hover {
+      border-color: var(--accent);
+      background: var(--tag-bg);
+      text-decoration: none;
+    }
+  </style>
 </BaseLayout>
